@@ -1,11 +1,20 @@
 import { Request, Response } from 'express';
 
 import Filme from '../models/FilmeModel';
+import FotoModel from '../models/FotoModel';
 
 class FilmeController {
   async create(req: Request, res: Response): Promise<Response> {
     try {
-      const filme = await Filme.create(req.body);
+      const file = req.file;
+
+      const itemUpdated = await FotoModel.create(file);
+      const filmeMapped = {
+        ...req.body,
+        fotos: itemUpdated._id,
+      };
+
+      const filme = await Filme.create(filmeMapped);
 
       return res.json(filme);
     } catch (error) {

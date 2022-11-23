@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 
 const FilmeSchema = new Schema(
   {
@@ -9,7 +9,7 @@ const FilmeSchema = new Schema(
     generos: { type: String, require: true },
     disponível: { type: String, require: true },
     sinopse: { type: String, require: true },
-    foto: { type: String, require: false },
+    fotos: { type: mongoose.Types.ObjectId, ref: 'Foto' },
   },
   {
     timestamps: true,

@@ -2,8 +2,8 @@ import { Schema, model } from 'mongoose';
 
 const FotoSchema = new Schema(
   {
-    name: String,
-    key: String,
+    filename: String,
+    originalname: String,
     url: String,
   },
   {

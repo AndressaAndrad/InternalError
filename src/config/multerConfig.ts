@@ -12,11 +12,11 @@ export default {
       cb(null, `${Date.now()}_${aleatorio()}${extname(file.originalname)}`);
     },
   }),
-  fileFilter: (req, file, cb) => {
-    const formato = ['image/png', 'image/jpeg'];
-    if (!formato.includes(file.mimetype)) {
-      return cb(new Error('Arquivo precisa ser PNG ou JPEG'));
-    }
-    return cb(null, true);
-  },
+  // fileFilter: (req, file, cb) => {
+  //   const formato = ['image/png', 'image/jpeg'];
+  //   if (!formato.includes(file.mimetype)) {
+  //     return cb(new Error('Arquivo precisa ser PNG ou JPEG'));
+  //   }
+  //   return cb(null, true);
+  // },
 };

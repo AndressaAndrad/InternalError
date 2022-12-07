@@ -1,14 +1,11 @@
 import { Schema, model } from 'mongoose';
 
-const FotoSchema = new Schema(
-  {
-    filename: String,
-    originalname: String,
-    url: String,
-  },
-  {
-    timestamps: true,
-  },
-);
+const FotoSchema = new Schema({
+  filename: { type: String, default: '' },
+  originalname: { type: String, default: '' },
+  path: { type: String, default: '' },
+  createdAt: { type: Date, required: true, default: new Date() },
+  updatedAt: { type: Date },
+});
 
-export default model('Foto', FotoSchema);
+export default model('Fotos', FotoSchema);

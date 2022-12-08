@@ -8,7 +8,7 @@ const upload = multer(multerConfig);
 
 const routes = Router();
 
-routes.get('/filmes', FilmeController.index);
+routes.get('/filmes', FilmeController.findAllFilms);
 routes.get('/filmes/foto/:_id', FilmeController.showImageByFilmId);
 routes.get('/filmes/:_id', FilmeController.getFilmById);
 routes.post('/filmes', upload.single('foto'), FilmeController.create);

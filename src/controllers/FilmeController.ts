@@ -9,13 +9,12 @@ class FilmeController {
     try {
       const file = req.file;
 
-      console.log(file);
       const itemUpdated = await FotoModel.create({
         filename: file?.filename,
         path: file?.path,
         originalname: file?.originalname,
       });
-      console.log('Deu certo');
+
       const filmeMapped = {
         ...req.body,
         fotos: itemUpdated._id,
@@ -23,16 +22,6 @@ class FilmeController {
 
       const filme = await Filme.create(filmeMapped);
       return res.json(filme);
-    } catch (error) {
-      return res.status(500);
-    }
-  }
-
-  async index(req: Request, res: Response): Promise<Response> {
-    try {
-      const filmes = await Filme.find();
-
-      return res.json(filmes);
     } catch (error) {
       return res.status(500);
     }
@@ -67,6 +56,35 @@ class FilmeController {
   async delete(req: Request, res: Response): Promise<Response> {
     const foto = await Filme.findByIdAndDelete(req.params._id);
     return res.json({ foto, apagado: true });
+  }
+
+  async findAllFilms(req: Request, res: Response): Promise<Response> {
+    try {
+      const { page, limit } = req.query;
+      const pageFilter = Number(page || '1');
+      const limitFilter = Number(limit || '10');
+      const skipFilter = (pageFilter - 1) * limitFilter;
+
+      let films = [];
+      let countFilms = 0;
+
+      films = await Filme.find({})
+        .populate('fotos')
+        .limit(limitFilter)
+        .skip(skipFilter);
+
+      countFilms = await Filme.countDocuments({});
+
+      return res.status(200).json({
+        films,
+        totalPages: Math.ceil(countFilms / limitFilter),
+        currentPage: pageFilter,
+        limitFilter,
+        totalItens: countFilms,
+      });
+    } catch (error) {
+      return res.status(500);
+    }
   }
 }
 

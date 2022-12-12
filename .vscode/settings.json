@@ -1,5 +1,10 @@
 {
     "code-runner.executorMap": {
         "typescript": "cls && npx ts-node --files --transpile-only",
-    }
+    },
+    "cSpell.words": [
+        "filme",
+        "fotos",
+        "Itens"
+    ]
 }

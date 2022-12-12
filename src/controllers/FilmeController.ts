@@ -54,8 +54,18 @@ class FilmeController {
   }
 
   async delete(req: Request, res: Response): Promise<Response> {
-    const foto = await Filme.findByIdAndDelete(req.params._id);
-    return res.json({ foto, apagado: true });
+    try {
+      const filme = await Filme.findById(req.params._id);
+
+      if (filme.fotos) {
+        await FotoModel.findByIdAndDelete({ _id: filme.fotos });
+      }
+
+      await Filme.findByIdAndDelete(filme?._id);
+      return res.status(200).send('Filme deletado com sucesso.');
+    } catch (error) {
+      return res.status(500);
+    }
   }
 
   async findAllFilms(req: Request, res: Response): Promise<Response> {
